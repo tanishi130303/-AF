@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     %% スタイル定義
     classDef emergency fill:#ffcccc,stroke:#ff0000,stroke-width:2px;
@@ -56,7 +57,7 @@ graph TD
     HEMODYNAMICS{血行動態 安定?}
     HEMODYNAMICS -->|不安定| EMERG_CV[緊急電気的除細動]
     EMERG_CV --> DURATION_EMERG{発症からの時間}
-    DURATION_EMERG -->|<48時間| EMERG_DC[同期下 DC 施行]
+    DURATION_EMERG -->|"<48時間"| EMERG_DC[同期下 DC 施行]
     DURATION_EMERG -->|≧48時間 or 不明| HEPARIN_DC[ヘパリン静注<br>APTT 1.5-2倍に延長後 DC]
     HEPARIN_DC --> EMERG_POST[除細動後4週間以上抗凝固薬継続]
     EMERG_DC --> EMERG_POST
@@ -81,15 +82,15 @@ graph TD
     
     %% リズムコントロール詳細
     RHYTHM_FLOW --> RHYTHM_AC{除細動前の抗凝固管理}
-    RHYTHM_AC -->|<48時間 + 低リスク| DIRECT_CV[そのまま電気的 or 薬理学的除細動]
+    RHYTHM_AC -->|"<48時間 + 低リスク"| DIRECT_CV[そのまま電気的 or 薬理学的除細動]
     RHYTHM_AC -->|≧48時間 or 不明| THREE_WEEK_AC[3週間の抗凝固療法後に除細動<br>または TEE で血栓陰性ならヘパリン下で除細動]
     THREE_WEEK_AC --> CV_POST[除細動後 4週間以上抗凝固継続]
     DIRECT_CV --> CV_POST
     CV_POST --> AAD_CHOICE{抗不整脈薬選択}
     
     AAD_CHOICE --> AF_DURATION{発症からの期間 / タイプ}
-    AF_DURATION -->|<7日 (発作性AF)| IC_DRUG[Ic群: Naチャネル遮断<br>ピルシカイニド, フレカイニド,<br>プロパフェノン]:::therapy
-    AF_DURATION -->|≧7日 (持続性AF)| III_DRUG[III/IV群: Kチャネル遮断<br>アミオダロン, ソタロール,<br>ベプリジル]:::therapy
+    AF_DURATION -->|"<7日 (発作性AF)"| IC_DRUG[Ic群: Naチャネル遮断<br>ピルシカイニド, フレカイニド,<br>プロパフェノン]:::therapy
+    AF_DURATION -->|"≧7日 (持続性AF)"| III_DRUG[III/IV群: Kチャネル遮断<br>アミオダロン, ソタロール,<br>ベプリジル]:::therapy
     
     IC_DRUG --> AAD_DETAIL[選択の注意点:<br>心不全合併→心抑制のない薬剤<br>腎不全→肝代謝型薬剤<br>誘因に応じた受容体遮断選択]
     III_DRUG --> AAD_DETAIL
@@ -112,3 +113,4 @@ graph TD
         FRAIL((FRAIL-AF: フレイル高齢者で<br>ワルファリン→DOAC切替は出血増)):::info
         ARTESIA((ARTESIA/NOAH-AFNET6:<br>AHREsへの抗凝固は出血リスクに注意)):::info
     end
+```
