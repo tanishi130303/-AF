@@ -1,116 +1,69 @@
 ```mermaid
 graph TD
-    %% スタイル定義
-    classDef emergency fill:#ffcccc,stroke:#ff0000,stroke-width:2px;
     classDef decision fill:#ffffcc,stroke:#ffaa00,stroke-width:2px;
     classDef therapy fill:#ccffcc,stroke:#00aa00,stroke-width:2px;
     classDef exclude fill:#ffdddd,stroke:#cc0000,stroke-dasharray: 5 5;
     classDef info fill:#e6e6fa,stroke:#8a2be2;
 
-    %% --- メインフロー開始 ---
-    START[心房細動の診断] --> CLASSIFY{弁膜症性AF?<br>中等度以上MS / 機械弁}
-    
-    %% 弁膜症性の場合（抗凝固療法はワルファリン固定）
-    CLASSIFY -->|はい| VALVE_WARFARIN[抗凝固薬: ワルファリン<br>目標 INR 1.6-2.6]:::therapy
-    VALVE_WARFARIN --> HEMODYNAMICS
-    
-    CLASSIFY -->|"いいえ (非弁膜症性AF)"| CHADS[CHADS₂-65 / CHA₂DS₂-VASc 評価]
-    
-    %% 血栓リスク評価
-    CHADS -->|男性0点 / 女性1点| NO_AC[抗凝固療法不要]:::exclude
-    NO_AC --> HEMODYNAMICS
-    
-    CHADS -->|男性1点 / 女性2点| HASBLED{HAS-BLED 評価}
-    HASBLED -->|≧3点| NO_AC2[抗凝固療法は控え<br>抗血小板薬を考慮]:::exclude
-    NO_AC2 --> HEMODYNAMICS
-    HASBLED -->|≦2点| AC_INDICATED[抗凝固療法 適応]:::decision
-    
-    CHADS -->|男性≧2点 / 女性≧3点| AC_INDICATED
-    
-    %% 抗凝固薬の選択
-    AC_INDICATED --> SPECIAL_COND{特殊背景}
-    SPECIAL_COND -->|抗リン脂質抗体症候群| WARFARIN_SELECT[ワルファリン]:::therapy
-    SPECIAL_COND -->|維持透析| DIALYSIS_NOTE[抗凝固薬ルーチン使用<br>推奨されない]:::exclude
-    DIALYSIS_NOTE --> HEMODYNAMICS
-    SPECIAL_COND -->|高度腎障害<br>Ccr 15-30 mL/分| RENAL_CHOICE[ワルファリン or 減量 DOAC]:::decision
-    SPECIAL_COND -->|"フレイル高齢者 (ワルファリン安定中)"| FRAIL_WARF[ワルファリン継続推奨<br>FRAIL-AF試験]:::therapy
-    FRAIL_WARF --> HEMODYNAMICS
-    SPECIAL_COND -->|その他 or 条件なし| SAMETT2R2{SAMe-TT₂R₂ スコア}
-    
-    %% SAMe-TT2R2 分岐
-    SAMETT2R2 -->|0-2点| WARFARIN_SELECT
-    SAMETT2R2 -->|≧3点| DOAC_SELECT[DOAC 群より選択]:::therapy
-    
-    %% DOAC 個別選択
-    DOAC_SELECT --> DOAC_CHOICE{患者背景で選択}
-    DOAC_CHOICE -->|消化管出血既往| APIX[アピキサバン]:::therapy
-    DOAC_CHOICE -->|最高の脳梗塞予防| DABI150[ダビガトラン 150 mg]:::therapy
-    DOAC_CHOICE -->|80歳以上 / 出血高危惧| DABI110[ダビガトラン 110 mg / エドキサバン 15 mg]:::therapy
-    DOAC_CHOICE -->|1日1回希望 / 除細動予定| RIVA_EDOX[リバーロキサバン / エドキサバン]:::therapy
-    APIX --> HEMODYNAMICS
-    DABI150 --> HEMODYNAMICS
-    DABI110 --> HEMODYNAMICS
-    RIVA_EDOX --> HEMODYNAMICS
-    WARFARIN_SELECT --> HEMODYNAMICS
-    
-    %% ---- 血行動態評価と不整脈戦略 ----
-    HEMODYNAMICS{血行動態 安定?}
-    HEMODYNAMICS -->|不安定| EMERG_CV[緊急電気的除細動]
-    EMERG_CV --> DURATION_EMERG{発症からの時間}
-    DURATION_EMERG -->|"<48時間"| EMERG_DC[同期下 DC 施行]
-    DURATION_EMERG -->|≧48時間 or 不明| HEPARIN_DC[ヘパリン静注<br>APTT 1.5-2倍に延長後 DC]
-    HEPARIN_DC --> EMERG_POST[除細動後4週間以上抗凝固薬継続]
-    EMERG_DC --> EMERG_POST
-    EMERG_POST --> END_EMERG[以後、安定時の管理へ移行]
-    
-    HEMODYNAMICS -->|安定| RATE_RHYTHM{リズムコントロール or<br>レートコントロール?}
-    
-    %% 戦略選択基準
-    RATE_RHYTHM -->|適応あり| RHYTHM_FLOW[リズムコントロール]:::therapy
-    RATE_RHYTHM -->|適応なし / 高齢者| RATE_FLOW[レートコントロール]:::therapy
-    
-    %% レートコントロール詳細
-    RATE_FLOW --> TARGET_HR[目標: 安静時 <80〜110 bpm<br>>120 bpm 持続を避ける]
-    TARGET_HR --> RATE_CHOICE1{心不全合併?}
-    RATE_CHOICE1 -->|あり| BB_HF[β遮断薬<br>例: ビソプロロール, カルベジロール]:::therapy
-    RATE_CHOICE1 -->|なし / COPD・喘息| CA_BLOCKER[非ジヒドロピリジン系Ca拮抗薬<br>例: ベラパミル, ジルチアゼム]:::therapy
-    BB_HF --> RATE_SECOND{不十分な場合}
-    CA_BLOCKER --> RATE_SECOND
-    RATE_SECOND -->|追加 or 代替| DIGOXIN[ジゴキシン<br>安静時心拍数に有効]:::therapy
-    RATE_SECOND -->|難治性 or 低血圧リスク| AMIO_RATE[アミオダロン静注]:::therapy
-    DIGOXIN --> RATE_TIPS[プロトコル備考:<br>ランジオロール持続静注可<br>ベラパミル低血圧時は<br>カルチコール併用]:::info
-    
-    %% リズムコントロール詳細
-    RHYTHM_FLOW --> RHYTHM_AC{除細動前の抗凝固管理}
-    RHYTHM_AC -->|"<48時間 + 低リスク"| DIRECT_CV[そのまま電気的 or 薬理学的除細動]
-    RHYTHM_AC -->|≧48時間 or 不明| THREE_WEEK_AC[3週間の抗凝固療法後に除細動<br>または TEE で血栓陰性ならヘパリン下で除細動]
-    THREE_WEEK_AC --> CV_POST[除細動後 4週間以上抗凝固継続]
-    DIRECT_CV --> CV_POST
-    CV_POST --> AAD_CHOICE{抗不整脈薬選択}
-    
-    AAD_CHOICE --> AF_DURATION{発症からの期間 / タイプ}
-    AF_DURATION -->|"<7日 (発作性AF)"| IC_DRUG[Ic群: Naチャネル遮断<br>ピルシカイニド, フレカイニド,<br>プロパフェノン]:::therapy
-    AF_DURATION -->|"≧7日 (持続性AF)"| III_DRUG[III/IV群: Kチャネル遮断<br>アミオダロン, ソタロール,<br>ベプリジル]:::therapy
-    
-    IC_DRUG --> AAD_DETAIL[選択の注意点:<br>心不全合併→心抑制のない薬剤<br>腎不全→肝代謝型薬剤<br>誘因に応じた受容体遮断選択]
-    III_DRUG --> AAD_DETAIL
-    AAD_DETAIL --> REFRACTORY{薬物無効 or 副作用}
-    REFRACTORY -->|はい| ABLATION[カテーテルアブレーション<br>心不全例では早期考慮推奨]:::therapy
-    REFRACTORY -->|いいえ| AAD_CONTINUE["抗不整脈薬継続（除細動後2-4週間は必須）"]:::therapy
-    AAD_CONTINUE --> END_RHYTHM
-    
-    ABLATION --> END_RHYTHM
-    
-    %% 終端
-    END_RHYTHM([管理継続 / 経過観察])
-    END_EMERG --> END_RHYTHM
-    RATE_TIPS --> END_RHYTHM
+    START[心房細動: 長期管理] --> CONTRA{"Child-Pugh B/C 肝硬変<br>または 維持透析 (DM以外)?"}
+    CONTRA -->|"はい (禁忌)"| NO_AC_SPECIAL[抗凝固療法 原則推奨されない<br>専門家に相談]:::exclude
+    CONTRA -->|"いいえ"| TYPE{"弁膜症性AF?<br>中等度以上MS / 機械弁"}
 
-    %% 注釈
-    subgraph Legend[エビデンスの要点]
-        EAST((EAST-AFNET4: 発症1年以内早期リズム制御<br>で心血管死亡・脳梗塞リスク低下)):::info
-        RACE7((RACE 7 ACWAS: 待機的除細動で<br>48時間以内に69%自然復帰)):::info
-        FRAIL((FRAIL-AF: フレイル高齢者で<br>ワルファリン→DOAC切替は出血増)):::info
-        ARTESIA((ARTESIA/NOAH-AFNET6:<br>AHREsへの抗凝固は出血リスクに注意)):::info
+    %% ---- 弁膜症性 ----
+    TYPE -->|"はい (弁膜症性)"| VALVE_WARFARIN[ワルファリン<br>目標 INR 1.6-2.6]:::therapy
+    VALVE_WARFARIN --> SPECIAL_WARF{特殊状況?}
+    SPECIAL_WARF -->|"抗リン脂質抗体症候群"| APS_CONFIRM[ワルファリン継続]:::therapy
+    SPECIAL_WARF -->|"リウマチ性MS"| INVICTUS[DOACよりワルファリン推奨<br>INVICTUS: HR 1.53]:::therapy
+    SPECIAL_WARF -->|"生体弁のみ"| BIOVALVE[DOACの方が出血/血栓症リスク低]:::therapy
+
+    %% ---- 非弁膜症性 ----
+    TYPE -->|"いいえ (非弁膜症性)"| CHADS[CHA₂DS₂-VASc スコア<br>または CHADS₂-65]
+    
+    CHADS -->|"男性0点 / 女性1点"| NO_AC[抗凝固療法 不要]:::exclude
+    
+    CHADS -->|"男性1点 / 女性2点"| HASBLED{HAS-BLED スコア}
+    HASBLED -->|"≧3点 (高リスク)"| NO_AC2[抗凝固療法は控える<br>抗血小板薬を考慮]:::exclude
+    HASBLED -->|"≦2点 (低リスク)"| INDICATED[抗凝固療法 適応]:::decision
+    
+    CHADS -->|"男性≧2点 / 女性≧3点"| INDICATED
+
+    %% ---- 無症候性心房頻拍 ----
+    INDICATED --> AHRE{"無症候性心房頻拍<br>(デバイス検出 etc)?"}
+    AHRE -->|"あり"| CONSULT_AHRE[意見割れており<br>専門家に相談]:::decision
+    AHRE -->|"なし"| SPECIAL{特殊病態・背景}
+
+    %% ---- 特殊病態 ----
+    SPECIAL -->|"抗リン脂質抗体症候群"| WF_APS[ワルファリン]:::therapy
+    SPECIAL -->|"維持透析 (DM関連)"| WF_DM[ワルファリン考慮<br>専門家に相談]:::therapy
+    SPECIAL -->|"高度腎障害<br>Ccr 15-30 mL/分"| CKD_CHOICE[ワルファリン<br>または 減量DOAC]:::decision
+    CKD_CHOICE -->|"日本人高齢者(≧80歳)かつ<br>通常量抗凝固困難<br>(出血歴, 低体重, NSAIDs併用,<br>抗血小板薬併用など)<br>→エドキサバン15mg"| EDOX15["ELDERCARE-AF試験<br>低用量エドキサバン15mg<br>脳梗塞リスク低下 (NNT 24)<br>出血リスク増加 (NNH 5.6)"]:::therapy
+    CKD_CHOICE -->|"80歳以上/≦60kg/Cr≧1.5<br>の2項目該当<br>→アピキサバン減量"| APIX25[アピキサバン2.5mg1日2回]:::therapy
+    CKD_CHOICE -->|"その他<br>→ワルファリン"| WF_CKD[INR調節]:::therapy
+
+    SPECIAL -->|"フレイル高齢者<br>ワルファリン安定中"| FRAIL_WARF[ワルファリン継続<br>DOAC切替は出血増]:::therapy
+
+    SPECIAL -->|"その他"| SAMETT2R2{SAMe-TT₂R₂ スコア}
+    SAMETT2R2 -->|"0-2点"| WF_STANDARD[ワルファリン<br>INR安定が期待]:::therapy
+    SAMETT2R2 -->|"≧3点 (アジア人は大半)"| DOAC_SELECT[DOACより選択<br>以下の患者背景を参照]:::therapy
+
+    DOAC_SELECT --> DOAC_CHOICE{患者背景で選択<br>（Table 10 完全網羅）}
+
+    %% ---- DOAC 選択分岐（Table 10 全9項目）----
+    DOAC_CHOICE -->|"1日1回投与を希望"| ONEDAY[リバーロキサバン<br>エドキサバン]:::therapy
+    DOAC_CHOICE -->|"年齢≧80歳"| AGE80[ダビガトラン110mg<br>アピキサバン<br>リバーロキサバン<br>エドキサバン<br>※150mgは出血リスク増のため回避]:::therapy
+    DOAC_CHOICE -->|"脳卒中の既往歴あり"| STROKE_HX[アピキサバン<br>リバーロキサバン<br>（アピキサバンが最も脳卒中<br>リスク低下の可能性）]:::therapy
+    DOAC_CHOICE -->|"上部消化管出血の既往"| UGI_BLEED[アピキサバン<br>（ワルファリン比で唯一<br>消化管出血リスク低下）]:::therapy
+    DOAC_CHOICE -->|"脳梗塞リスク高<br>かつ出血リスク低"| HIGHSTROKE_LOWBLEED[ダビガトラン150mg<br>（最も強力な脳梗塞予防）]:::therapy
+    DOAC_CHOICE -->|"脳梗塞リスク高<br>かつ出血リスク高"| HIGHSTROKE_HIGHBLEED[ダビガトラン110mg<br>アピキサバン<br>エドキサバン<br>（ワルファリンより出血低）]:::therapy
+    DOAC_CHOICE -->|"冠動脈疾患を合併"| CAD[DOAC全般<br>（急性冠症候群後の<br>死亡リスク低下）]:::therapy
+    DOAC_CHOICE -->|"腎疾患を合併<br>（CKD stage 3-4）"| RENAL[アピキサバン（腎排泄27%）<br>リバーロキサバン（35%）<br>エドキサバン（50%）<br>※維持透析では推奨されない]:::therapy
+    DOAC_CHOICE -->|"電気的除細動を予定"| CARDIOVERSION[リバーロキサバン<br>（前向き研究あり）]:::therapy
+
+    %% ---- スコア詳細（横並びで縦サイズ抑える）----
+    subgraph "スコア詳細"
+        direction LR
+        CHADS_DETAIL["CHA₂DS₂-VASc: C(心不全1)/ H(高血圧1)/ A2(75歳以上2)/ D(糖尿病1)/ S2(脳卒中/TIA/塞栓症既往2)/ V(血管疾患1)/ A(65-74歳1)/ Sc(女性1)"]:::info
+        HASBLED_DETAIL["HAS-BLED: H(収縮期≧160mmHg1)/ A(腎機能異常1)+A(肝機能異常1)/ S(脳卒中1)/ B(出血1)/ L(INR不安定1)/ E(65歳超1)/ D(薬剤1)+D(アルコール1)"]:::info
+        SAMETT2R2_DETAIL["SAMe-TT₂R₂: S(女性1)/ A(60歳未満1)/ Me(病歴>2→1:高血圧,糖尿病,冠動脈疾患/心筋梗塞,末梢動脈疾患,心不全,脳卒中,肺疾患,肝疾患,腎疾患)/ T(リズムコントロール治療1)/ T(2年以内喫煙2)/ R(白人以外2)"]:::info
     end
 ```
