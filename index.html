@@ -1,79 +1,159 @@
 <!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Code</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>心房細動：急性期マネジメントフローチャート</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心房細動マネジメント 統合フローチャート</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            font-family: "Hiragino Kaku Gothic ProN", "Meiryo", "Noto Sans JP", sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
             background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 30px;
+        }
+        header h1 { font-size: 24px; margin-bottom: 6px; }
+        header p { opacity: 0.85; font-size: 14px; }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+            background: #fafafa;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 14px 24px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #555;
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
             font-size: 14px;
-            line-height: 1.5;
         }
-        .page {
-            page-break-after: always;
-            padding: 10px 20px;
+        .tab:hover { background: #f0f0f0; }
+        .tab.active {
+            color: #2c3e50;
+            border-bottom-color: #3498db;
+            background: white;
         }
-        .page:last-child { page-break-after: auto; }
-
-        h1 { font-size: 22px; margin-bottom: 10px; color: #333; }
-        h2 { font-size: 18px; margin: 15px 0 8px 0; border-bottom: 1px solid #ccc; padding-bottom: 3px; }
-        
-        .mermaid {
-            font-size: 16px !important;
-            width: 100%;
+        .tab-content {
+            display: none;
+            padding: 25px 30px;
         }
-        .mermaid .nodeLabel { font-size: 15px !important; }
-        .mermaid .edgeLabel { font-size: 12px !important; }
-
+        .tab-content.active { display: block; }
+        .mermaid-wrap {
+            background: white;
+            padding: 10px;
+            overflow-x: auto;
+            margin-bottom: 25px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        h2 {
+            font-size: 20px;
+            margin: 20px 0 12px 0;
+            color: #2c3e50;
+            border-left: 5px solid #3498db;
+            padding-left: 12px;
+        }
+        h3 { font-size: 16px; margin: 20px 0 8px 0; color: #444; }
+        h4 { font-size: 14px; margin: 14px 0 6px 0; color: #555; }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin: 12px 0 20px 0;
             font-size: 13px;
-            margin: 15px 0 20px 0;
-            page-break-inside: avoid;
         }
         th, td {
-            border: 1px solid #999;
-            padding: 5px 8px;
+            border: 1px solid #ccc;
+            padding: 7px 10px;
             vertical-align: top;
-            word-break: break-word;
+            text-align: left;
         }
-        th {
-            background: #eef2f5;
-            font-weight: bold;
+        th { background: #ecf0f1; font-weight: bold; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .note {
+            font-size: 13px;
+            color: #777;
+            margin-top: 10px;
+            background: #fffde7;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #f1c40f;
+        }
+        .warn {
+            background: #ffeaea;
+            border-left: 4px solid #e74c3c;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+            line-height: 1.8;
+        }
+        footer {
             text-align: center;
-            white-space: nowrap;
+            padding: 16px;
+            color: #999;
+            font-size: 13px;
+            border-top: 1px solid #eee;
         }
-        td:first-child { font-weight: bold; }
-
-        @media print {
-            @page { size: A4 landscape; margin: 8mm; }
-            body { background: white; }
-            .page { page-break-after: always; }
-            .page:last-child { page-break-after: auto; }
+        @media (max-width: 768px) {
+            .tab { padding: 10px 14px; font-size: 13px; }
+            .tab-content { padding: 15px; }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: 'default',
-            themeVariables: {
-                fontFamily: '"Hiragino Kaku Gothic ProN", "Meiryo", sans-serif',
-                fontSize: '16px'
-            },
-            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
-        });
-    </script>
 </head>
 <body>
+<div class="container">
+    <header>
+        <h1>心房細動 統合マネジメントフローチャート</h1>
+        <p>急性期対応（発症時間・血行動態・レート/リズム制御）＋ 長期的血栓症予防（抗凝固療法）＋ Pill-in-the-Pocket</p>
+    </header>
 
-<!-- ===== 1ページ目：急性期フローチャート ===== -->
-<div class="page">
-    <h1>心房細動：急性期マネジメントフローチャート</h1>
-    <div class="mermaid">
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab(event,'acute')">🩺 急性期マネジメント</div>
+        <div class="tab" onclick="switchTab(event,'chronic')">❤️ 長期血栓症予防</div>
+        <div class="tab" onclick="switchTab(event,'pip')">💊 Pill-in-the-Pocket</div>
+        <div class="tab" onclick="switchTab(event,'tables')">📊 スコア・薬剤一覧</div>
+    </div>
+
+    <!-- ========== 急性期タブ ========== -->
+    <div id="acute" class="tab-content active">
+        <h2>急性期マネジメント：発症時間と血行動態に基づく治療選択</h2>
+        <div class="mermaid-wrap">
+            <div class="mermaid" id="mermaid-acute">
 graph TD
     classDef emergency fill:#ffcccc,stroke:#ff0000,stroke-width:2px;
     classDef decision fill:#ffffcc,stroke:#ffaa00,stroke-width:2px;
@@ -81,46 +161,42 @@ graph TD
     classDef info fill:#e6e6fa,stroke:#8a2be2;
     classDef tip fill:#fff8e1,stroke:#ffa000,stroke-dasharray:5 5;
 
-    START[心房細動の診断] --> ONSET{"発症からの時間？"}
+    START["心房細動の診断"] --> ONSET{"発症からの時間？"}
 
-    %% ---- 発症＜48時間 ----
     ONSET -->|"＜48時間"| HEMO1{"血行動態 安定？"}
     HEMO1 -->|"不安定"| DC1["緊急同期下DC<br>初回100J→200J→300J<br>鎮静併用"]:::emergency
     DC1 --> NOTE12["※発症12～48時間では<br>ヘパリン2000～5000単位静注を考慮"]:::info
-    NOTE12 --> POST1[除細動後4週間抗凝固]
+    NOTE12 --> POST1["除細動後4週間抗凝固"]
     HEMO1 -->|"安定"| RHYTHM_MERIT1{"リズムコントロールの<br>メリットがあるか？"}
 
-    %% ---- 発症≧48時間 または 不明 ----
     ONSET -->|"≧48時間 または 不明"| HEMO2{"血行動態 安定？"}
-    HEMO2 -->|"不安定"| DC2["ヘパリン2000～5000単位静注<br>APTT 1.5～2倍に延長後<br>同期下DC（100J→200→300J）<br>鎮静併用"]:::emergency
-    DC2 --> POST2[除細動後4週間抗凝固]
-    HEMO2 -->|"安定"| HEPARIN_PREP["3週間抗凝固療法<br>またはTEEで血栓(-)確認後<br>電気的/薬理的除細動を検討"]:::therapy
+    HEMO2 -->|"不安定"| DC2["ヘパリン2000～5000単位静注<br>APTT 1.5～2倍に延長後<br>同期下DC 100J→200J→300J<br>鎮静併用"]:::emergency
+    DC2 --> POST2["除細動後4週間抗凝固"]
+    HEMO2 -->|"安定"| HEPARIN_PREP["3週間抗凝固療法<br>またはTEEで血栓陰性確認後<br>電気的/薬理的除細動を検討"]:::therapy
     HEPARIN_PREP --> RHYTHM_MERIT2{"リズムコントロールの<br>メリットがあるか？"}
 
-    %% ---- リズムコントロール選択（YES）----
-    RHYTHM_MERIT1 -->|"YES"| CHECK_12_48{"発症12～48時間<br>かつ 高リスク？<br>（男性≧2点, 女性≧3点,<br>血栓症既往, 中等度以上MS, 人工弁）"}
-    CHECK_12_48 -->|"YES"| AC_BEFORE_CV["除細動前に<br>抗凝固療法（3週間）<br>または TEE で血栓(-)確認"]:::info
+    RHYTHM_MERIT1 -->|"YES"| CHECK_12_48{"発症12～48時間<br>かつ 高リスク？<br>男性2点以上 女性3点以上<br>血栓症既往 中等度以上MS 人工弁"}
+    CHECK_12_48 -->|"YES"| AC_BEFORE_CV["除細動前に<br>抗凝固療法 3週間<br>または TEEで血栓陰性確認"]:::info
     AC_BEFORE_CV --> RHYTHM_PATH
     CHECK_12_48 -->|"NO"| RHYTHM_PATH
 
-    RHYTHM_MERIT2 -->|"YES"| RHYTHM_PATH[リズムコントロール]:::therapy
-    RHYTHM_PATH --> CV_METHOD{除細動方法}
-    CV_METHOD -->|"薬理学的除細動"| CONSULT["※ 抗不整脈薬を使用する場合は<br>可能であれば専門医コンサルトが望ましい"]:::info
+    RHYTHM_MERIT2 -->|"YES"| RHYTHM_PATH["リズムコントロール"]:::therapy
+    RHYTHM_PATH --> CV_METHOD{"除細動方法"}
+    CV_METHOD -->|"薬理学的除細動"| CONSULT["抗不整脈薬を使用する場合は<br>可能であれば専門医コンサルトが望ましい"]:::info
     CONSULT --> AAD_CHOICE{"発症からの期間？"}
-    AAD_CHOICE -->|"＜7日（発作性）"| STRUCTURAL_CHECK{"器質的心疾患あり？"}
-    AAD_CHOICE -->|"≧7日（持続性）"| III["III/IV群 K遮断<br>アミオダロン/ベプリジル等"]:::therapy
+    AAD_CHOICE -->|"7日未満 発作性"| STRUCTURAL_CHECK{"器質的心疾患あり？"}
+    AAD_CHOICE -->|"7日以上 持続性"| III["III群 IV群<br>アミオダロン ベプリジル等"]:::therapy
     CV_METHOD -->|"電気的除細動"| DC_PLANNED["同期下DC<br>100J→200J→300J<br>鎮静併用"]:::therapy
-    CV_METHOD -->|"待機的除細動<br>（夜間帯など）"| WAIT_SEE["初期にレートコントロール<br>発症48時間以内に<br>自然復帰しなければ除細動"]:::therapy
+    CV_METHOD -->|"待機的除細動"| WAIT_SEE["初期にレートコントロール<br>発症48時間以内に<br>自然復帰しなければ除細動"]:::therapy
     WAIT_SEE --> RATE_PATH
 
-    %% ---- 器質的心疾患 → Na遮断を避けてIII群へ ----
-    STRUCTURAL_CHECK -->|"あり<br>※ Na遮断薬は原則控える"| III
-    STRUCTURAL_CHECK -->|"なし"| IC["Ic群 Na遮断"]:::therapy
+    STRUCTURAL_CHECK -->|"あり Na遮断薬は原則控える"| III
+    STRUCTURAL_CHECK -->|"なし"| IC["Ic群 Naチャネル遮断"]:::therapy
     IC --> RENAL_IC{"腎不全？"}
-    RENAL_IC -->|"あり"| RENAL_DRUG["プロパフェノン or<br>フレカイニド減量"]:::therapy
-    RENAL_IC -->|"なし"| PILSI_DRUG["ピルシカイニド<br>Naチャネル阻害のみ, 心抑制作用少<br>洞調律維持に有用"]:::therapy
+    RENAL_IC -->|"あり"| RENAL_DRUG["プロパフェノン または<br>フレカイニド 減量"]:::therapy
+    RENAL_IC -->|"なし"| PILSI_DRUG["ピルシカイニド<br>心抑制作用少 洞調律維持に有用"]:::therapy
 
-    RENAL_DRUG --> FAIL
+    RENAL_DRUG --> FAIL{"除細動 失敗？"}
     PILSI_DRUG --> FAIL
     III --> FAIL
     DC_PLANNED --> FAIL
@@ -129,184 +205,368 @@ graph TD
     ABLATION --> RATE_INTEGRATE["効果不十分なら<br>レートコントロールへ移行"]:::decision
     AAD_CONTINUE --> RATE_INTEGRATE
 
-    %% ---- リズム失敗時 → レートコントロールへ ----
     RATE_INTEGRATE --> RATE_PATH
 
-    %% ---- レートコントロール選択（NO）----
     RHYTHM_MERIT1 -->|"NO"| RATE_PATH
-    RHYTHM_MERIT2 -->|"NO"| RATE_PATH[レートコントロール]:::therapy
-    RATE_PATH --> TARGET_HR["目標：安静時 ＜110 bpm"]
-    TARGET_HR --> HF_SEPSIS{"心不全を合併している<br>or 敗血症である？"}
-    HF_SEPSIS -->|"あり"| BB["β遮断薬<br>ビソプロロール/カルベジロール<br>※喘息は原則禁忌 / COPDには慎重投与"]:::therapy
-    HF_SEPSIS -->|"なし / COPD・喘息"| CCB["非ジヒドロピリジン系Ca拮抗薬<br>ベラパミル/ジルチアゼム"]:::therapy
-    CCB --> VERAPAMIL_TIP["【ベラパミル使用時の注意】<br>ベラパミル5mg静注前に<br>グルコン酸カルシウム(カルチコール8.5%)<br>10mL緩徐静注で低血圧予防<br>投与後に低血圧となった場合も<br>カルチコール投与で血圧上昇"]:::tip
+    RHYTHM_MERIT2 -->|"NO"| RATE_PATH["レートコントロール"]:::therapy
+    RATE_PATH --> TARGET_HR["目標 安静時 110bpm未満"]
+    TARGET_HR --> HF_SEPSIS{"心不全合併<br>または 敗血症？"}
+    HF_SEPSIS -->|"あり"| BB["β遮断薬<br>ビソプロロール カルベジロール<br>喘息は原則禁忌 COPDには慎重投与"]:::therapy
+    HF_SEPSIS -->|"なし または COPD 喘息"| CCB["非ジヒドロピリジン系Ca拮抗薬<br>ベラパミル ジルチアゼム"]:::therapy
+    CCB --> VERAPAMIL_TIP["ベラパミル使用時の注意<br>ベラパミル5mg静注前に<br>グルコン酸カルシウム カルチコール8.5%<br>10mL緩徐静注で低血圧予防<br>投与後の低血圧にもカルチコール有効"]:::tip
     VERAPAMIL_TIP --> DIG_AMIO
-    BB --> DIG_AMIO["不十分ならジゴキシン or アミオダロン"]:::therapy
-    DIG_AMIO --> AMIODARONE_DETAIL["【最後の砦：アミオダロン】<br>アミオダロン 5 mg/kg を1時間で静注<br>その後 0.5〜1 mg/分で持続静注<br>血圧を下げずに心拍数コントロール可能"]:::therapy
-    AMIODARONE_DETAIL --> FINAL_POST[除細動後4週間抗凝固<br>＋長期血栓症予防評価へ]:::decision
+    BB --> DIG_AMIO["不十分ならジゴキシン または アミオダロン"]:::therapy
+    DIG_AMIO --> AMIODARONE_DETAIL["最後の砦 アミオダロン<br>5mg/kgを1時間で静注<br>その後0.5～1mg/分で持続静注<br>血圧を下げずに心拍数コントロール可能"]:::therapy
+    AMIODARONE_DETAIL --> FINAL_POST["除細動後4週間抗凝固<br>長期血栓症予防評価へ"]:::decision
 
-    %% ---- 不安定ルートの合流 ----
     POST1 --> FINAL_POST
     POST2 --> FINAL_POST
+            </div>
+        </div>
+        <div class="note">※ 本フローチャートは情報提供を目的としています。実際の診療は患者背景と最新ガイドラインに基づいて判断してください。</div>
+
+        <h2>Table 2：心拍数/リズムコントロール選択基準</h2>
+        <table>
+            <thead>
+                <tr><th style="width:50%;">心拍数コントロールが適する</th><th style="width:50%;">リズムコントロールが適する</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>80歳超の高齢者</td><td>65歳未満の心房細動<br>75歳超で動脈硬化リスクがある発症1年以内</td></tr>
+                <tr><td>不整脈による症状がない、許容できる</td><td>不整脈による症状が強い・心房細動により心不全を生じる</td></tr>
+                <tr><td>心不全の既往歴なし</td><td>心不全がある、リスクが高い</td></tr>
+                <tr><td>抗不整脈薬の禁忌、使用して失敗している</td><td>抗不整脈薬が使用可能</td></tr>
+                <tr><td>多剤併用（polypharmacy）</td><td>治療可能な原因や誘因がある心房細動</td></tr>
+                <tr><td>高血圧</td><td>高血圧がない</td></tr>
+                <tr><td>冠動脈疾患既往</td><td>新規発症の孤発性心房細動</td></tr>
+                <tr><td>患者が除細動を好まない</td><td>患者が除細動を希望</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Table 3：心拍数コントロールで主に使用する薬剤</h2>
+        <table>
+            <thead>
+                <tr><th>薬剤名</th><th>商品名</th><th>投与経路・用量</th><th>特徴・注意点</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ジゴキシン</td><td>ジゴキシン錠®</td><td>経口：0.0625～0.25mg/日<br>静注：0.4～0.6mg</td><td>安静時心拍数低下。血圧低下例でも使用可。</td></tr>
+                <tr><td>ビソプロロール</td><td>メインテート®</td><td>経口：2.5～5.0mg/日</td><td>β遮断薬。心不全・運動時心拍数抑制に有効。</td></tr>
+                <tr><td>カルベジロール</td><td>アーチスト®</td><td>経口：5～20mg/日</td><td>β遮断薬。心不全管理にも使用。</td></tr>
+                <tr><td>ランジオロール</td><td>オノアクト®</td><td>静注：1～10μg/kg/分</td><td>超短時間型β遮断薬。心機能低下例でも使用可。ICU/HCU向け。</td></tr>
+                <tr><td>ベラパミル</td><td>ワソラン®</td><td>経口：120～240mg/日<br>静注：5mgを5分以上かけて</td><td>非DHP系Ca拮抗薬。低血圧・心抑制注意。静注時グルコン酸Ca併用で低血圧予防可。</td></tr>
+                <tr><td>ジルチアゼム</td><td>ヘルベッサー®</td><td>経口：90～180mg/日<br>静注：10mgを3分以上かけて</td><td>非DHP系Ca拮抗薬。</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Table 4：リズムコントロールで主に使用する抗不整脈薬</h2>
+        <table>
+            <thead>
+                <tr><th>クラス</th><th>一般名</th><th>商品名</th><th>用量目安</th><th>特徴・注意点</th></tr>
+            </thead>
+            <tbody>
+                <tr><td rowspan="3">Ic群</td><td>プロパフェノン</td><td>プロノン®</td><td>経口：450～900mg/日</td><td>肝代謝。β遮断作用あり。腎不全患者に使いやすい。</td></tr>
+                <tr><td>フレカイニド</td><td>タンボコール®</td><td>経口：100～200mg/日</td><td>腎排泄。腎不全時は減量。</td></tr>
+                <tr><td>ピルシカイニド</td><td>サンリズム®</td><td>経口：150～225mg/日</td><td>腎排泄。心抑制作用少。洞調律維持に有用。</td></tr>
+                <tr><td rowspan="2">III群</td><td>アミオダロン</td><td>アンカロン®</td><td>経口：200～400mg/日<br>静注：125～150mg後0.5～1mg/分持続</td><td>多チャネル遮断。心不全でも安全。副作用（甲状腺・肺・肝）に注意。</td></tr>
+                <tr><td>ベプリジル</td><td>ベプリコール®</td><td>経口：100～200mg/日</td><td>多チャネル遮断。QT延長に注意。</td></tr>
+            </tbody>
+        </table>
     </div>
-    <p style="margin-top:10px; font-size:13px; color:#555;">※ このフローチャートは情報提供を目的としています。実際の診療は患者背景と最新のガイドラインに基づいて判断してください。</p>
+
+    <!-- ========== 長期血栓症予防タブ ========== -->
+    <div id="chronic" class="tab-content">
+        <h2>長期的血栓症予防：抗凝固療法の適応と薬剤選択</h2>
+        <div class="mermaid-wrap">
+            <div class="mermaid" id="mermaid-chronic">
+graph TD
+    classDef decision fill:#ffffcc,stroke:#ffaa00,stroke-width:2px;
+    classDef therapy fill:#ccffcc,stroke:#00aa00,stroke-width:2px;
+    classDef exclude fill:#ffdddd,stroke:#cc0000,stroke-width:2px;
+    classDef info fill:#e6e6fa,stroke:#8a2be2;
+
+    START2["心房細動 長期管理"] --> CONTRA{"Child-Pugh B/C 肝硬変<br>または維持透析 DM以外?"}
+    CONTRA -->|"はい 禁忌"| NO_AC_SPECIAL["抗凝固療法 原則推奨されない<br>専門家に相談"]:::exclude
+    CONTRA -->|"いいえ"| TYPE{"弁膜症性AF?<br>中等度以上MS または 機械弁"}
+
+    TYPE -->|"はい 弁膜症性"| VALVE_WARFARIN["ワルファリン<br>目標 INR 1.6から2.6"]:::therapy
+    VALVE_WARFARIN --> SPECIAL_WARF{"特殊状況?"}
+    SPECIAL_WARF -->|"抗リン脂質抗体症候群"| APS_CONFIRM["ワルファリン継続"]:::therapy
+    SPECIAL_WARF -->|"リウマチ性MS"| INVICTUS["DOACよりワルファリン推奨<br>INVICTUS試験"]:::therapy
+    SPECIAL_WARF -->|"生体弁のみ"| BIOVALVE["DOACの方が出血リスク低"]:::therapy
+
+    TYPE -->|"いいえ 非弁膜症性"| CHADS["CHA2DS2VASc スコア評価"]
+
+    CHADS -->|"男性0点 女性1点"| NO_AC["抗凝固療法 不要"]:::exclude
+    CHADS -->|"男性1点 女性2点"| HASBLED{"HASBLED スコア評価"}
+    HASBLED -->|"3点以上 高出血リスク"| NO_AC2["抗凝固療法は控える<br>抗血小板薬を考慮"]:::exclude
+    HASBLED -->|"2点以下 低出血リスク"| INDICATED["抗凝固療法 適応"]:::decision
+    CHADS -->|"男性2点以上 女性3点以上"| INDICATED
+
+    INDICATED --> AHRE{"無症候性心房頻拍<br>デバイス検出?"}
+    AHRE -->|"あり"| CONSULT_AHRE["意見割れており<br>専門家に相談"]:::decision
+    AHRE -->|"なし"| SPECIAL{"特殊病態 背景を確認"}
+
+    SPECIAL -->|"抗リン脂質抗体症候群"| WF_APS["ワルファリン"]:::therapy
+    SPECIAL -->|"維持透析 DM関連"| WF_DM["ワルファリン考慮<br>専門家に相談"]:::therapy
+    SPECIAL -->|"高度腎障害<br>Ccr 15から30"| CKD_CHOICE{"腎障害時の選択"}
+    CKD_CHOICE -->|"80歳以上かつ<br>通常量抗凝固困難"| EDOX15["低用量エドキサバン15mg<br>ELDERCARE AF試験"]:::therapy
+    CKD_CHOICE -->|"80歳以上または体重60kg以下<br>またはCr1.5以上 のうち2項目"| APIX25["アピキサバン2.5mg 1日2回"]:::therapy
+    CKD_CHOICE -->|"その他"| WF_CKD["ワルファリン INR調節"]:::therapy
+
+    SPECIAL -->|"フレイル高齢者<br>ワルファリン安定中"| FRAIL_WARF["ワルファリン継続<br>DOAC切替は出血増加"]:::therapy
+
+    SPECIAL -->|"その他"| SAMETT2R2{"SAmeTT2R2 スコア"}
+    SAMETT2R2 -->|"0から2点"| WF_STANDARD["ワルファリン<br>INR安定が期待される"]:::therapy
+    SAMETT2R2 -->|"3点以上 アジア人は大半"| DOAC_SELECT["DOACより選択"]:::therapy
+
+    DOAC_SELECT --> DOAC_CHOICE{"患者背景で選択"}
+
+    DOAC_CHOICE -->|"1日1回希望"| ONEDAY["リバーロキサバン<br>エドキサバン"]:::therapy
+    DOAC_CHOICE -->|"80歳以上"| AGE80["ダビガトラン110mg<br>アピキサバン<br>リバーロキサバン<br>エドキサバン"]:::therapy
+    DOAC_CHOICE -->|"脳卒中既往"| STROKE_HX["アピキサバン<br>リバーロキサバン"]:::therapy
+    DOAC_CHOICE -->|"上部消化管出血既往"| UGI_BLEED["アピキサバン<br>唯一消化管出血リスク低下"]:::therapy
+    DOAC_CHOICE -->|"脳梗塞高リスク<br>出血リスク低"| HIGHSTROKE_LOWBLEED["ダビガトラン150mg<br>最も強力な脳梗塞予防"]:::therapy
+    DOAC_CHOICE -->|"脳梗塞高リスク<br>出血リスク高"| HIGHSTROKE_HIGHBLEED["ダビガトラン110mg<br>アピキサバン<br>エドキサバン"]:::therapy
+    DOAC_CHOICE -->|"冠動脈疾患合併"| CAD["DOAC全般<br>急性冠症候群後の死亡リスク低下"]:::therapy
+    DOAC_CHOICE -->|"腎疾患合併<br>CKD stage 3から4"| RENAL["アピキサバン 腎排泄27%<br>リバーロキサバン 35%<br>エドキサバン 50%"]:::therapy
+    DOAC_CHOICE -->|"電気的除細動予定"| CARDIOVERSION["リバーロキサバン<br>前向き研究あり"]:::therapy
+            </div>
+        </div>
+        <div class="note">※ 無症候性心房頻拍（AHREs）に対する抗凝固療法は意見が割れており、専門家への相談が推奨されます。</div>
+
+        <h2>Table 8：心房細動の血栓症予防に使用する抗凝固薬</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>一般名（商品名）</th>
+                    <th>腎排泄率/蛋白結合率</th>
+                    <th>半減期</th>
+                    <th>通常投与量</th>
+                    <th>減量基準</th>
+                    <th>禁忌</th>
+                    <th>術前中止目安</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ダビガトラン（プラザキサ®）</td>
+                    <td>腎排泄80%<br>蛋白結合35%</td>
+                    <td>12～17時間</td>
+                    <td>150mg 1日2回<br>110mg 1日2回</td>
+                    <td>Ccr 30～50<br>ベラパミル・アミオダロン併用<br>70歳以上・消化管出血既往</td>
+                    <td>Ccr≦30<br>イトラコナゾール併用</td>
+                    <td>Ccr≧50→24h<br>Ccr 30～50→2日<br>Ccr＜30→2～4日</td>
+                </tr>
+                <tr>
+                    <td>リバーロキサバン（イグザレルト®）</td>
+                    <td>腎排泄30～40%<br>蛋白結合90%以上</td>
+                    <td>5～9時間</td>
+                    <td>15mg 1日1回<br>10mg 1日1回</td>
+                    <td>Ccr 15～49</td>
+                    <td>Ccr≦15<br>中等度肝障害<br>アゾール系抗真菌薬・抗HIV薬</td>
+                    <td>24時間以上前</td>
+                </tr>
+                <tr>
+                    <td>アピキサバン（エリキュース®）</td>
+                    <td>腎排泄27%<br>蛋白結合87%</td>
+                    <td>約12時間</td>
+                    <td>5mg 1日2回<br>2.5mg 1日2回</td>
+                    <td>80歳以上・体重60kg以下・Cr≧1.5 の2項目該当</td>
+                    <td>Ccr≦15</td>
+                    <td>低リスク：24時間前<br>高リスク：48時間前</td>
+                </tr>
+                <tr>
+                    <td>エドキサバン（リクシアナ®）</td>
+                    <td>腎排泄35%<br>蛋白結合55%</td>
+                    <td>9～11時間</td>
+                    <td>60mg 1日1回<br>30mg 1日1回<br>15mg 1日1回</td>
+                    <td>80歳以上<br>Ccr 30～50<br>Ccr 15～30</td>
+                    <td>Ccr≦15<br>感染性心内膜炎</td>
+                    <td>24時間以上前</td>
+                </tr>
+                <tr>
+                    <td>ワルファリン</td>
+                    <td>－</td>
+                    <td>55～133時間</td>
+                    <td>INRで調節<br>目標 1.6～2.6</td>
+                    <td>－</td>
+                    <td>－</td>
+                    <td>約5日前</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ========== Pill-in-the-Pocket タブ ========== -->
+    <div id="pip" class="tab-content">
+        <h2>Pill-in-the-Pocket 法：実践的まとめ</h2>
+
+        <h3>STEP 1：事前確認事項</h3>
+        <h4>除外すべき器質的心疾患</h4>
+        <div class="warn">
+            <strong>以下を除外する（心電図・心エコー・問診）</strong><br>
+            ❌ 虚血性心疾患（心筋梗塞後・狭心症）<br>
+            ❌ 心不全（EF低下・症候性）<br>
+            ❌ 高度左室肥大（LVH）<br>
+            ❌ WPW症候群（副伝導路）<br>
+            ❌ 洞不全症候群・高度房室ブロック<br>
+            ❌ QT延長症候群<br>
+            ❌ 束枝ブロック（脚ブロック）<br>
+            ❌ 重度腎機能障害（ピルシカイニドの場合）<br>
+            ❌ 重度肝機能障害
+        </div>
+
+        <h4>確認すべき検査</h4>
+        <table>
+            <tr><th>検査</th><th>確認内容</th></tr>
+            <tr><td>12誘導心電図</td><td>WPW・脚ブロック・QT延長・LVH除外</td></tr>
+            <tr><td>心エコー</td><td>EF・壁運動・弁膜症・LVH</td></tr>
+            <tr><td>血液検査</td><td>腎機能（Cr・eGFR）・肝機能・電解質</td></tr>
+            <tr><td>Holterなど</td><td>洞不全症候群・高度房室ブロック除外</td></tr>
+        </table>
+
+        <h4>患者背景の確認</h4>
+        <pre>
+✅ 発作頻度（月1回以下が理想）
+✅ 発作時症状（自覚できるか）
+✅ 発作時の血行動態（失神・低血圧なし）
+✅ 患者の理解度・信頼性
+✅ 医療機関へのアクセス
+✅ CHA2DS2-VAScスコア（抗凝固薬の要否）</pre>
+
+        <h3>STEP 2：院内での安全性確認（必須）⭐</h3>
+        <div class="warn">
+            <strong>⚠️ いきなり外来処方してはいけない！</strong><br>
+            実際にAf発作時または発作を捉えたタイミングで院内（外来または短期入院）にて薬剤を投与し、安全性・有効性を事前確認する
+        </div>
+
+        <h3>STEP 3：実際の投与方法</h3>
+        <h4>ピルシカイニド（サンリズム®）</h4>
+        <table>
+            <tr><th>投与経路</th><th>用量</th><th>備考</th></tr>
+            <tr><td>内服</td><td>100mg（25mg×4カプセル）頓服</td><td>発作確認後速やかに内服。効果発現：1～3時間</td></tr>
+            <tr><td>点滴（院内）</td><td>1mg/kgを10分かけて緩徐静注</td><td>例：体重60kg→60mgを生食で希釈し10分で投与。効果発現：30分～1時間</td></tr>
+        </table>
+        <div class="note">⚠️ 腎排泄100%のため腎機能要確認。eGFR＜50では減量・慎重投与。eGFR＜30では原則禁忌。</div>
+
+        <h4>フレカイニド（タンボコール®）</h4>
+        <table>
+            <tr><th>投与経路</th><th>用量</th><th>備考</th></tr>
+            <tr><td>内服</td><td>200mg 頓服（欧米標準）</td><td>体重・腎機能により調整</td></tr>
+            <tr><td>点滴（院内）</td><td>1.5～2mg/kgを10～20分かけて緩徐静注</td><td>例：体重60kg→90～120mgを生食で希釈。急速投与禁忌</td></tr>
+        </table>
+
+        <h3>STEP 4：β遮断薬または非DHP Ca拮抗薬の併用（AFL移行予防）</h3>
+        <div class="warn">
+            <strong>AFL（2:1伝導）移行を予防するために房室結節を抑制する</strong><br>
+            Ic群投与→心房レート低下（Afが粗動化）→AFL移行→心室レート150bpm前後に上昇→血行動態悪化のリスク
+        </div>
+        <table>
+            <tr><th>タイミング</th><th>β遮断薬</th><th>非DHP Ca拮抗薬</th></tr>
+            <tr><td>内服（前投与）</td><td>ビソプロロール 2.5mg<br>メトプロロール 25～50mg</td><td>ベラパミル 80mg<br>ジルチアゼム 60mg</td></tr>
+            <tr><td>静注（院内）</td><td>ランジオロール 0.04～0.06mg/kg/分</td><td>ベラパミル 5mg 緩徐静注<br>ジルチアゼム 0.1～0.3mg/kg</td></tr>
+        </table>
+
+        <h3>STEP 5：投与後モニタリング・患者指導</h3>
+        <table>
+            <tr><th>確認項目</th><th>確認内容</th><th>異常時の対応</th></tr>
+            <tr><td>心拍数</td><td>徐脈（50bpm未満）がないか</td><td>β遮断薬・Ca拮抗薬の過量を疑う</td></tr>
+            <tr><td>血圧</td><td>低血圧（収縮期90mmHg未満）がないか</td><td>輸液・昇圧考慮</td></tr>
+            <tr><td>QRS幅</td><td>著明なQRS延長がないか（25%超延長）</td><td>Ic群過量・催不整脈を疑う</td></tr>
+            <tr><td>QTc</td><td>QT延長がないか</td><td>特にフレカイニド</td></tr>
+            <tr><td>リズム</td><td>AFLへの移行がないか</td><td>レートコントロール強化</td></tr>
+            <tr><td>症状</td><td>めまい・失神・胸痛がないか</td><td>緊急対応</td></tr>
+        </table>
+        <pre>
+【患者への退院・帰宅指導】
+1. 発作時の対応：動悸を感じたら安静にしてから内服。内服後は横になって休む。
+2. 追加内服はしない：効かないからといって2回目を飲まない。
+3. 受診の目安：内服後6～8時間で止まらなければ受診。息切れ・失神・胸痛があればすぐ受診。
+4. 内服後の行動制限：内服後は運転・危険な作業をしない。
+5. 抗凝固薬について：洞調律に戻っても抗凝固薬は継続。
+6. 発作記録をつける：いつ・どのくらいで止まったか記録。</pre>
+    </div>
+
+    <!-- ========== スコア・薬剤一覧タブ ========== -->
+    <div id="tables" class="tab-content">
+        <h2>スコア詳細</h2>
+        <h3>① CHA2DS2-VASc スコア</h3>
+        <table>
+            <tr><th>項目</th><th>内容</th><th>点数</th></tr>
+            <tr><td>C</td><td>うっ血性心不全</td><td>1</td></tr>
+            <tr><td>H</td><td>高血圧</td><td>1</td></tr>
+            <tr><td>A2</td><td>75歳以上</td><td>2</td></tr>
+            <tr><td>D</td><td>糖尿病</td><td>1</td></tr>
+            <tr><td>S2</td><td>脳梗塞/TIA/塞栓症の既往</td><td>2</td></tr>
+            <tr><td>V</td><td>血管疾患（心筋梗塞既往・末梢動脈疾患・大動脈プラーク）</td><td>1</td></tr>
+            <tr><td>A</td><td>65～74歳</td><td>1</td></tr>
+            <tr><td>Sc</td><td>女性</td><td>1</td></tr>
+        </table>
+
+        <h3>② HAS-BLED スコア（出血リスク）</h3>
+        <table>
+            <tr><th>項目</th><th>内容</th><th>点数</th></tr>
+            <tr><td>H</td><td>高血圧（収縮期160mmHg以上）</td><td>1</td></tr>
+            <tr><td>A</td><td>腎機能異常（透析・Cr 2～3mg/dL以上）</td><td>1</td></tr>
+            <tr><td>A</td><td>肝機能異常（肝硬変・T-Bil 2倍超・AST/ALT 3倍以上）</td><td>1</td></tr>
+            <tr><td>S</td><td>脳卒中既往</td><td>1</td></tr>
+            <tr><td>B</td><td>出血または出血傾向</td><td>1</td></tr>
+            <tr><td>L</td><td>INRコントロール不良</td><td>1</td></tr>
+            <tr><td>E</td><td>65歳超</td><td>1</td></tr>
+            <tr><td>D</td><td>薬剤（NSAIDs・抗血小板薬）</td><td>1</td></tr>
+            <tr><td>D</td><td>アルコール依存</td><td>1</td></tr>
+        </table>
+        <p class="note">※ 合計3点以上で出血リスク高と判断。</p>
+
+        <h3>③ SAMe-TT2R2 スコア（ワルファリンコントロール予測）</h3>
+        <table>
+            <tr><th>項目</th><th>内容</th><th>点数</th></tr>
+            <tr><td>S</td><td>女性</td><td>1</td></tr>
+            <tr><td>A</td><td>60歳未満</td><td>1</td></tr>
+            <tr><td>Me</td><td>病歴2つ以上（高血圧・糖尿病・冠動脈疾患・末梢動脈疾患・心不全・脳卒中・肺疾患・肝疾患・腎疾患）</td><td>1</td></tr>
+            <tr><td>T</td><td>リズムコントロール治療中</td><td>1</td></tr>
+            <tr><td>T2</td><td>2年以内の喫煙</td><td>2</td></tr>
+            <tr><td>R2</td><td>白人以外の人種</td><td>2</td></tr>
+        </table>
+        <p class="note">※ 0～2点ならワルファリン、3点以上ならDOACが推奨されます。アジア人は大半が3点以上となります。</p>
+    </div>
+
+    <footer>© 2026 心房細動マネジメント統合フローチャート - 教育・臨床支援用</footer>
 </div>
 
-<!-- ===== 2ページ目以降：詳細な表 ===== -->
-<div class="page">
-    <h2>Table 2：心拍数/リズムコントロール選択基準</h2>
-    <table>
-        <thead>
-            <tr><th style="width:50%;">心拍数コントロールが適する</th><th style="width:50%;">リズムコントロールが適する</th></tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>＞80歳の高齢者</td>
-                <td>＜65歳の心房細動<br>＞75歳で動脈硬化リスクがある発症1年以内の心房細動</td>
-            </tr>
-            <tr>
-                <td>不整脈による症状がない、許容できる</td>
-                <td>不整脈による症状が強い<br>心房細動により心不全を生じる</td>
-            </tr>
-            <tr>
-                <td>心不全の既往歴なし</td>
-                <td>心不全がある、リスクが高い</td>
-            </tr>
-            <tr>
-                <td>抗不整脈薬の禁忌、使用して失敗している</td>
-                <td>抗不整脈薬が使用可能</td>
-            </tr>
-            <tr>
-                <td>他に複数種類の薬剤を使用している（polypharmacy）</td>
-                <td>治療可能な原因や誘因がある心房細動</td>
-            </tr>
-            <tr>
-                <td>高血圧</td>
-                <td>高血圧がない</td>
-            </tr>
-            <tr>
-                <td>冠動脈疾患既往</td>
-                <td>新規発症の孤発性心房細動</td>
-            </tr>
-            <tr>
-                <td>患者の希望（除細動を好まない）</td>
-                <td>患者の希望（除細動を希望）</td>
-            </tr>
-        </tbody>
-    </table>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'default',
+        themeVariables: {
+            fontFamily: '"Hiragino Kaku Gothic ProN", "Meiryo", sans-serif',
+            fontSize: '14px'
+        },
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
 
-    <h2>Table 3：心拍数コントロールで主に使用する薬剤</h2>
-    <table>
-        <thead>
-            <tr><th>薬剤名（一般名）</th><th>商品名</th><th>投与経路・用量</th><th>特徴・注意点</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>ジゴキシン</td><td>ジゴキシン錠®</td><td>経口：0.0625-0.25 mg/日 1日1回<br>経静脈：0.4-0.6 mg静注</td><td>安静時心拍数コントロールに向く。血圧低下例でも使用しやすい。</td></tr>
-            <tr><td>ビソプロロール</td><td>メインテート®</td><td>経口：2.5-5.0 mg/日 1日1回</td><td>β遮断薬。心不全・心筋症の慢性管理に向く。運動時心拍数抑制に有効。</td></tr>
-            <tr><td>カルベジロール</td><td>アーチスト®</td><td>経口：5-20 mg/日 1日1回</td><td>β遮断薬。心不全管理にも使用。</td></tr>
-            <tr><td>プロプラノロール</td><td>インデラル®</td><td>経口：30-90 mg/日 1日3回</td><td>β非選択性。COPD・喘息では避ける。</td></tr>
-            <tr><td>ナドロール</td><td>ナディック®</td><td>経口：30-60 mg/日 1日1回</td><td>β遮断薬。</td></tr>
-            <tr><td>アテノロール</td><td>テノーミン®</td><td>経口：25-100 mg/日 1日1回</td><td>β遮断薬。</td></tr>
-            <tr><td>アセブトロール</td><td>アセタノール®</td><td>経口：300-600 mg/日 1日3回</td><td>β遮断薬。</td></tr>
-            <tr><td>ランジオロール</td><td>オノアクト®</td><td>経静脈：1 μg/kg/分の速度で持続投与。1-10 μg/kg/分で調節</td><td>超短時間作用型β遮断薬。心機能低下例でも使用可能。ICU/HCUでの使用が基本。</td></tr>
-            <tr><td>ベラパミル</td><td>ワソラン®</td><td>経口：120-240 mg/日 1日3回<br>経静脈：1回5 mgを5分以上かけて静注</td><td>非ジヒドロピリジン系Ca拮抗薬。低血圧・心抑制リスク。静注時はグルコン酸カルシウム併用で低血圧予防可能。</td></tr>
-            <tr><td>ジルチアゼム</td><td>ヘルベッサー®</td><td>経口：90-180 mg/日 1日3回<br>経静脈：1回10 mgを3分以上かけて静注または0.25 mg/kg静注、その後5-20 mg/時で持続投与</td><td>非ジヒドロピリジン系Ca拮抗薬。</td></tr>
-        </tbody>
-    </table>
+    async function switchTab(evt, tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
 
-    <h2>Table 4：リズムコントロールで主に使用する抗不整脈薬（一般名・商品名・用量目安）</h2>
-    <table>
-        <thead>
-            <tr><th>クラス</th><th>一般名</th><th>商品名</th><th>一般的な1回量の目安 / 用法</th><th>特徴・注意点</th></tr>
-        </thead>
-        <tbody>
-            <tr><td rowspan="5">Ia群</td><td>プロカインアミド</td><td>アミサリン®</td><td>経静脈：1回50-100 mgを5分毎に効果が出るまで（最大500-1000 mg）</td><td>腎排泄。心抑制あり。</td></tr>
-            <tr><td>ジソピラミド</td><td>リスモダン®</td><td>経口：300 mg/日、1回100 mg 1日3回</td><td>腎排泄。抗コリン作用あり。</td></tr>
-            <tr><td>キニジン</td><td>硫酸キニジン®</td><td>経口：200-600 mg/日目安</td><td>肝代謝。現在ではあまり使用されない。</td></tr>
-            <tr><td>シベンゾリン</td><td>シベノール®</td><td>経口：150-300 mg/日、1回50-100 mg 1日3回</td><td>腎排泄。Naチャネル遮断＋抗コリン作用。</td></tr>
-            <tr><td>ピルメノール</td><td>ピメノール®</td><td>経口：150-300 mg/日</td><td>腎排泄。Naチャネル遮断＋抗コリン作用。</td></tr>
-            <tr><td rowspan="3">Ib群</td><td>リドカイン</td><td>キシロカイン®</td><td>経静脈：1-2 mg/kg静注、1-2 mg/分で持続静注</td><td>肝代謝。心室不整脈に使用。</td></tr>
-            <tr><td>メキシレチン</td><td>メキシチール®</td><td>経口：300-450 mg/日</td><td>肝代謝。</td></tr>
-            <tr><td>アプリンジン</td><td>アスペノン®</td><td>経口：40-60 mg/日</td><td>腎排泄。</td></tr>
-            <tr><td rowspan="3">Ic群</td><td>プロパフェノン</td><td>プロノン®</td><td>経口：450-900 mg/日、1回150-300 mg 1日3回</td><td>肝代謝。β遮断作用あり。腎不全患者で使用しやすい。</td></tr>
-            <tr><td>フレカイニド</td><td>タンボコール®</td><td>経口：100-200 mg/日、1回50-100 mg 1日2回</td><td>腎排泄。腎不全時は減量。</td></tr>
-            <tr><td>ピルシカイニド</td><td>サンリズム®</td><td>経口：150-225 mg/日、1回50-75 mg 1日3回</td><td>腎排泄。心抑制作用が少なく、使いやすい。洞調律維持に有用。</td></tr>
-            <tr><td rowspan="3">III群</td><td>アミオダロン</td><td>アンカロン®</td><td>経口：400 mg/日で開始、200 mg/日で維持<br>経静脈：125-150 mg静注後、0.5-1 mg/分で持続静注</td><td>肝代謝。多チャネル遮断。心不全でも安全だが副作用発現に注意。</td></tr>
-            <tr><td>ソタロール</td><td>ソタコール®</td><td>経口：80-160 mg/日目安</td><td>腎排泄。Kチャネル遮断＋β遮断作用。</td></tr>
-            <tr><td>ニフェカラント</td><td>シンビット®</td><td>経静脈：0.3 mg/kgを5分以上かけて静注、その後0.2-0.4 mg/kg/時で持続静注</td><td>肝・腎排泄。心室不整脈に使用。</td></tr>
-            <tr><td>IV群</td><td>ベプリジル</td><td>ベプリコール®</td><td>経口：100-200 mg/日目安</td><td>腎排泄。多チャネル遮断。QT延長に注意。</td></tr>
-        </tbody>
-    </table>
+        const nodes = document.querySelectorAll('#' + tabId + ' .mermaid:not([data-processed="true"])');
+        if (nodes.length > 0) {
+            await mermaid.run({ nodes: nodes });
+        }
+    }
 
-    <h2>Table 8：心房細動の血栓症予防に使用する抗凝固薬</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>一般名（商品名）</th>
-                <th>吸収率/腎排泄率/蛋白結合率</th>
-                <th>半減期</th>
-                <th>通常投与量</th>
-                <th>減量基準</th>
-                <th>禁忌</th>
-                <th>術前中止時期（出血リスクに応じて）</th>
-                <th>費用（/日）</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>ダビガトラン<br>（プラザキサ®）</td>
-                <td>吸収率 6%<br>腎排泄率 80%<br>蛋白結合率 35%</td>
-                <td>12–17 時間</td>
-                <td>150 mg 1 日 2 回<br>110 mg 1 日 2 回</td>
-                <td>Ccr 30–50 mL/分<br>ベラパミル，アミオダロン併用<br>70 歳以上，消化管出血既往</td>
-                <td>Ccr ≦ 30 mL/分<br>イトラコナゾール併用</td>
-                <td>低リスク：Ccr≧50→24h，<br>30–50→2日，<30→2–4日<br>高リスク：同順で 2–3日，2–3日，>5日</td>
-                <td>150 mg：538 円<br>110 mg：474 円</td>
-            </tr>
-            <tr>
-                <td>リバーロキサバン<br>（イグザレルト®）</td>
-                <td>吸収率ほぼ 100%<br>腎排泄率 30–40%<br>蛋白結合率 ≧90%</td>
-                <td>5–9 時間</td>
-                <td>15 mg 1 日 1 回<br>10 mg 1 日 1 回</td>
-                <td>Ccr 15–49 mL/分</td>
-                <td>Ccr ≦ 15 mL/分<br>中等度肝障害，感染性心内膜炎<br>アゾール系抗真菌薬，抗 HIV 薬併用</td>
-                <td>24 時間以上前</td>
-                <td>15 mg：489.4 円<br>10 mg：351.9 円</td>
-            </tr>
-            <tr>
-                <td>アピキサバン<br>（エリキュース®）</td>
-                <td>吸収率 50%<br>腎排泄率 27%<br>蛋白結合率 87%</td>
-                <td>約 12 時間</td>
-                <td>5 mg 1 日 2 回<br>2.5 mg 1 日 2 回</td>
-                <td>80 歳以上，体重 60 kg 以下，<br>Cr ≧ 1.5 mg/dL のうち<br>2 項目該当</td>
-                <td>Ccr ≦ 15 mL/分</td>
-                <td>低リスク手技：24 時間以上前<br>高リスク手技：48 時間以上前</td>
-                <td>5 mg：438.4 円<br>2.5 mg：242.2 円</td>
-            </tr>
-            <tr>
-                <td>エドキサバン<br>（リクシアナ®）</td>
-                <td>吸収率 50%<br>腎排泄率 35%<br>蛋白結合率 55%</td>
-                <td>9–11 時間</td>
-                <td>60 mg 1 日 1 回<br>30 mg 1 日 1 回<br>15 mg 1 日 1 回</td>
-                <td>80 歳以上<br>Ccr 30–50 mL/分<br>Ccr 15–30 mL/分</td>
-                <td>Ccr ≦ 15 mL/分<br>感染性心内膜炎</td>
-                <td>24 時間以上前</td>
-                <td>60 mg：416.8 円<br>30 mg：411.3 円<br>15 mg：224.7 円</td>
-            </tr>
-            <tr>
-                <td>ワルファリン</td>
-                <td>－</td>
-                <td>55–133 時間<br>（半減期は個体差大）</td>
-                <td>INR で調節<br>（目標 1.6–2.6）</td>
-                <td>－</td>
-                <td>－</td>
-                <td>約 5 日前</td>
-                <td>9.8 円 / 1 mg</td>
-            </tr>
-        </tbody>
-    </table>
-    <p style="font-size:12px; color:#666; margin-top:5px;">※ 費用は概算であり、薬価改定により変動します。術前中止期間は出血リスク・腎機能を加味して判断してください。</p>
-</div>
-
+    window.addEventListener('DOMContentLoaded', async () => {
+        const firstNodes = document.querySelectorAll('#acute .mermaid');
+        if (firstNodes.length > 0) {
+            await mermaid.run({ nodes: firstNodes });
+        }
+    });
+</script>
 </body>
+</html>
+    
+  </body>
+  
 </html>
